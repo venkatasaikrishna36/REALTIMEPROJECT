@@ -55,27 +55,6 @@ pipeline {
             }
         }
 
-        stage('Update Kubernetes Deployment Manifest File') {
-            environment {
-                GIT_REPO_NAME = "REALTIMEPROJECT"
-                GIT_USER_NAME = "venkatasaikrishna36"
-            }
-            steps {
-                withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
-                    sh '''
-                        git config user.email "venkatasai.mannem469@gmail.com"
-                        git config user.name "venkatasaikrishna36"
-
-                        sed -i "s|k8s:.*|k8s:${BUILD_NUMBER}|g" Ansible/k8s_deployment.yaml
-
-                        git add .
-                        git commit -m "Update deployment image tag to version ${BUILD_NUMBER}"
-                        git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
-                    '''
-                }
-            }
-        }
-
         stage('K8s Deployment using Ansible') {
             steps {
                 script {
