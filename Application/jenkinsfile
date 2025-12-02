@@ -44,17 +44,6 @@ pipeline {
             }
         }
 
-        stage('Push Image to DockerHub') {
-            steps {
-                script {
-                    withCredentials([string(credentialsId: 'dockerhub', variable: 'dockerhub')]) {
-                        sh 'echo "${dockerhub}" | docker login -u saikrishna36 --password-stdin'
-                    }
-                    sh 'docker push saikrishna36/k8s:${BUILD_NUMBER}'
-                }
-            }
-        }
-
         stage('K8s Deployment using Ansible') {
             steps {
                 script {
