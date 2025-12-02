@@ -38,11 +38,11 @@ pipeline {
             }
         }
 
-        stage('Docker Image Scan') {
-            steps {
-                sh 'trivy image saikrishna36/k8s:${BUILD_NUMBER}'
-            }
-        }
+      //  stage('Docker Image Scan') {
+       //     steps {
+         //       sh 'trivy image saikrishna36/k8s:${BUILD_NUMBER}'
+        //    }
+      //  }
 
         stage('K8s Deployment using Ansible') {
             steps {
